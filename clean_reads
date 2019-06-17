@@ -1,0 +1,37 @@
+#!/bin/bash 
+
+### Variables
+sample_num = 100 #number of samples wanted
+species_num = 4 #number of species in simulation
+hybrid_num = sample_num*(species_num-1) #number of hybrids generated
+readsnum = 
+hybridreadsnum = readsnum/2
+### Trim, filter and combine reads
+for species in raw_reads_lig; do
+	dirname=${species}
+	name="${dirname%"${dirname##*[!/]}"}"
+	name=${name##*/}
+	cat *.fastq |  NanoFilt --headcrop 100 --tailcrop 100 | NanoFilt -q 7| gzip > /trimfilterraw/${name}.fastq
+
+
+### Generating hybrids
+
+for species in
+
+
+### Generate simulations
+for trimfilt in trimfilterraw; do
+	x=${trimfilt%.*}
+        name=$(basename $x)
+	COUNTER1=0
+        	while [  $COUNTER1 -lt sample_num ]; do
+		seqtk sample -s${COUNTER1} ${trimfilt} ${readsnum} > simulations/${name}_${COUNTER1}.fastq
+        	echo The counter is $COUNTER1
+        	let COUNTER1=COUNTER1+1 
+        	done
+	COUNTER2=0
+                while [  $COUNTER2 -lt hybrid_num ]; do
+                seqtk sample -s${COUNTER2} ${trimfilt} ${hybridreadsnum} > half_sims/${name}/${name}_${COUNTER2}.fastq
+                echo The counter is $COUNTER2
+                let COUNTER2=COUNTER2+1 
+                done

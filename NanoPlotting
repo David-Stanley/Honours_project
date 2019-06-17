@@ -1,0 +1,9 @@
+#!/bin/bash 
+
+for f in trimfilterraw/*; do
+	echo ${f}
+        x=${f%.*}
+	x=$(basename $x)
+	echo ${x}
+	NanoPlot -t 4 --fastq ${f} -o NanoPlots_filtered/${x}
+	done
